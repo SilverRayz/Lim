@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkillMatch UMKM – Temukan Kecocokan Kerja</title>
+    <title>SkillMatch UMKM – Find Your Perfect Job</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -26,7 +26,10 @@
             width: 100%; padding: 12px; border: 2px solid #e1e5e9;
             border-radius: 8px; font-size: 16px; transition: border-color 0.3s;
         }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #2b5876; }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #2b5876;
+        }
         .btn {
             width: 100%; padding: 14px;
             background: linear-gradient(135deg, #2b5876 0%, #4e4376 100%);
@@ -81,38 +84,38 @@
     <div class="container">
         <div class="header">
             <h1>🧩 SkillMatch UMKM</h1>
-            <p>Temukan Pekerjaan dan Kandidat Terbaik – Berbasis Google Sheets</p>
+            <p>Connect Jobs with Perfect Candidates – Powered by Google Sheets</p>
         </div>
 
         <!-- AUTHENTICATION -->
         <div id="authContainer" class="auth-container">
             <div class="user-type-selector">
                 <div class="user-type-card active" data-type="jobseeker">
-                    <h3>👨‍💼 Pencari Kerja</h3><p>Cari pekerjaan impian</p>
+                    <h3>👨‍💼 Job Seeker</h3><p>Find your dream job</p>
                 </div>
                 <div class="user-type-card" data-type="employer">
-                    <h3>🏢 UMKM</h3><p>Cari kandidat terbaik</p>
+                    <h3>🏢 UMKM / Employer</h3><p>Find perfect candidates</p>
                 </div>
             </div>
             <div id="authMessage"></div>
             <form id="authForm">
                 <div class="form-group">
-                    <label>Nama Lengkap</label>
-                    <input type="text" id="name" required placeholder="Masukkan nama lengkap">
+                    <label>Full Name</label>
+                    <input type="text" id="name" required placeholder="Enter your full name">
                 </div>
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" id="email" required placeholder="Masukkan email">
+                    <input type="email" id="email" required placeholder="Enter your email">
                 </div>
                 <div class="form-group">
-                    <label>Kata Sandi</label>
-                    <input type="password" id="password" required placeholder="Minimal 6 karakter">
+                    <label>Password</label>
+                    <input type="password" id="password" required placeholder="Min 6 characters">
                 </div>
                 <input type="hidden" id="userType" value="jobseeker">
-                <button type="submit" class="btn" id="authButton">Daftar SkillMatch</button>
+                <button type="submit" class="btn" id="authButton">Join SkillMatch</button>
                 <p style="text-align: center; margin-top: 20px; color: #666;">
-                    <span id="switchText">Sudah punya akun?</span>
-                    <a href="#" id="switchMode" style="color: #2b5876; font-weight: 600;">Masuk</a>
+                    <span id="switchText">Already have an account?</span>
+                    <a href="#" id="switchMode" style="color: #2b5876; font-weight: 600;">Login</a>
                 </p>
             </form>
         </div>
@@ -120,66 +123,65 @@
         <!-- DASHBOARD -->
         <div id="dashboard" class="dashboard hidden">
             <div class="nav-tabs">
-                <button class="nav-tab active" data-tab="profile">Profil Saya</button>
-                <button class="nav-tab" data-tab="matches">Lowongan/Kandidat Cocok</button>
-                <button class="nav-tab" data-tab="post">Buat Lowongan / Resume</button>
+                <button class="nav-tab active" data-tab="profile">My Profile</button>
+                <button class="nav-tab" data-tab="matches">Matches</button>
+                <button class="nav-tab" data-tab="post">Post Job / Resume</button>
             </div>
             <div id="dashboardMessage"></div>
 
             <!-- Profile Tab -->
             <div id="profileTab">
-                <h2 id="welcomeMsg">Selamat datang!</h2>
+                <h2 id="welcomeMsg">Welcome!</h2>
                 <form id="profileForm">
                     <div class="form-group">
-                        <label id="profileLabel">Keahlian / Persyaratan</label>
-                        <textarea id="skills" rows="4" placeholder="contoh: JavaScript, React, Node.js"></textarea>
+                        <label id="profileLabel">Skills / Requirements</label>
+                        <textarea id="skills" rows="4" placeholder="e.g., JavaScript, React, Node.js"></textarea>
                     </div>
                     <div class="form-group">
-                        <label id="experienceLabel">Tingkat Pengalaman</label>
+                        <label id="experienceLabel">Experience Level</label>
                         <select id="experience">
-                            <option value="entry">Pemula (0-2 tahun)</option>
-                            <option value="mid">Menengah (3-5 tahun)</option>
-                            <option value="senior">Senior (5+ tahun)</option>
+                            <option value="entry">Entry Level (0-2 years)</option>
+                            <option value="mid">Mid Level (3-5 years)</option>
+                            <option value="senior">Senior Level (5+ years)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label id="locationLabel">Preferensi Lokasi</label>
-                        <input type="text" id="location" placeholder="Kota atau Remote">
+                        <label id="locationLabel">Location Preference</label>
+                        <input type="text" id="location" placeholder="City or Remote">
                     </div>
-                    <button type="submit" class="btn">Perbarui Profil</button>
+                    <button type="submit" class="btn">Update Profile</button>
                 </form>
             </div>
 
             <!-- Matches Tab -->
             <div id="matchesTab" class="hidden">
-                <h2>Hasil Pencocokan</h2>
+                <h2>Your Perfect Matches</h2>
                 <div id="matchesGrid" class="matches-grid"></div>
             </div>
 
             <!-- Post Job / Resume Tab -->
             <div id="postTab" class="hidden">
-                <h2 id="postTitle">Buat Lowongan / Resume Baru</h2>
+                <h2 id="postTitle">Post New Job / Resume</h2>
                 <form id="postForm">
                     <div class="form-group">
-                        <label id="postLabel">Judul Lowongan / Posisi</label>
-                        <input type="text" id="jobTitle" placeholder="contoh: Full Stack Developer">
+                        <label id="postLabel">Job Title / Position</label>
+                        <input type="text" id="jobTitle" placeholder="e.g., Full Stack Developer">
                     </div>
-                    <!-- Additional skills field only for UMKM -->
                     <div class="form-group hidden" id="postSkillsGroup">
-                        <label>Keterampilan yang Dibutuhkan</label>
-                        <textarea id="postSkills" rows="3" placeholder="contoh: JavaScript, React, Node.js"></textarea>
+                        <label>Required Skills (for UMKM)</label>
+                        <textarea id="postSkills" rows="3" placeholder="e.g., JavaScript, React, Node.js"></textarea>
                     </div>
-                    <button type="submit" class="btn">Pasang & Cari Kecocokan</button>
+                    <button type="submit" class="btn">Post & Find Matches</button>
                 </form>
             </div>
 
-            <button id="logoutBtn" class="btn btn-secondary">Keluar</button>
+            <button id="logoutBtn" class="btn btn-secondary">Logout</button>
         </div>
     </div>
 
     <script>
         // ==================== CONFIGURATION ====================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlkgjGAT1k9IQhxrB8ZS0BfgEJlhDQe4H56L4eswXPaeVI6e6qsB0X5IXY3Sm0gLjU/exec'; // Ganti dengan URL Apps Script Anda
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlkgjGAT1k9IQhxrB8ZS0BfgEJlhDQe4H56L4eswXPaeVI6e6qsB0X5IXY3Sm0gLjU/exec'; // Replace with your deployed Apps Script URL
 
         class SkillMatchApp {
             constructor() {
@@ -222,14 +224,14 @@
                 const switchText = document.getElementById('switchText');
                 const switchLink = document.getElementById('switchMode');
                 if (this.isLoginMode) {
-                    btn.textContent = 'Masuk';
-                    switchText.textContent = "Belum punya akun?";
-                    switchLink.textContent = 'Daftar';
+                    btn.textContent = 'Login';
+                    switchText.textContent = "Don't have an account?";
+                    switchLink.textContent = 'Register';
                     document.getElementById('name').parentElement.style.display = 'none';
                 } else {
-                    btn.textContent = 'Daftar SkillMatch';
-                    switchText.textContent = 'Sudah punya akun?';
-                    switchLink.textContent = 'Masuk';
+                    btn.textContent = 'Join SkillMatch';
+                    switchText.textContent = 'Already have an account?';
+                    switchLink.textContent = 'Login';
                     document.getElementById('name').parentElement.style.display = 'block';
                 }
                 this.clearMessage();
@@ -243,9 +245,9 @@
                 const password = document.getElementById('password').value;
                 const userType = document.getElementById('userType').value;
 
-                if (!email || !password) return this.showMessage('Mohon isi semua kolom yang diperlukan', 'error');
-                if (password.length < 6) return this.showMessage('Kata sandi minimal 6 karakter', 'error');
-                if (!this.isLoginMode && !name) return this.showMessage('Mohon masukkan nama lengkap', 'error');
+                if (!email || !password) return this.showMessage('Please fill in all required fields', 'error');
+                if (password.length < 6) return this.showMessage('Password must be at least 6 characters', 'error');
+                if (!this.isLoginMode && !name) return this.showMessage('Please enter your full name', 'error');
 
                 try {
                     if (this.isLoginMode) {
@@ -260,7 +262,7 @@
                     this.saveSession(this.currentUser);
                     this.showDashboard();
                 } catch (err) {
-                    this.showMessage('Gagal terhubung. Periksa koneksi.', 'error');
+                    this.showMessage('Network error. Check the console.', 'error');
                     console.error(err);
                 }
             }
@@ -279,7 +281,7 @@
                 });
                 if (res.success) {
                     this.saveSession(res.user);
-                    this.showMessage('Profil berhasil diperbarui!', 'success');
+                    this.showMessage('Profile updated successfully!', 'success');
                     this.findMatches();
                 } else {
                     this.showMessage(res.message, 'error');
@@ -289,16 +291,15 @@
             async postJobResume(e) {
                 e.preventDefault();
                 const title = document.getElementById('jobTitle').value;
-                if (!title) return this.showMessage('Judul lowongan / posisi harus diisi', 'error');
+                if (!title) return this.showMessage('Please enter a job title / position', 'error');
 
                 const isEmployer = this.currentUser.type === 'employer';
 
                 if (isEmployer) {
-                    // For UMKM: update required skills first, then create job
                     const postSkills = document.getElementById('postSkills').value.trim();
-                    if (!postSkills) return this.showMessage('Keterampilan yang dibutuhkan harus diisi', 'error');
+                    if (!postSkills) return this.showMessage('Please enter the required skills for the job', 'error');
 
-                    // Update profile skills with required skills for the job
+                    // Update UMKM profile skills with the required skills for the vacancy
                     const profileRes = await this.apiCall('updateProfile', {
                         userId: this.currentUser.id,
                         profile: {
@@ -308,7 +309,7 @@
                         }
                     });
                     if (!profileRes.success) {
-                        return this.showMessage('Gagal menyimpan keterampilan', 'error');
+                        return this.showMessage('Failed to save required skills', 'error');
                     }
                     this.currentUser = profileRes.user;
                     this.saveSession(this.currentUser);
@@ -324,7 +325,7 @@
                     this.saveSession(res.user);
                     document.getElementById('jobTitle').value = '';
                     if (isEmployer) document.getElementById('postSkills').value = '';
-                    this.showMessage('Berhasil dipasang!', 'success');
+                    this.showMessage('Posted successfully!', 'success');
                     this.findMatches();
                 } else {
                     this.showMessage(res.message, 'error');
@@ -333,21 +334,21 @@
 
             async findMatches() {
                 if (!this.currentUser || !this.currentUser.profile || !this.currentUser.profile.skills) {
-                    document.getElementById('matchesGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666;">Lengkapi profil Anda untuk melihat kecocokan!</p>';
+                    document.getElementById('matchesGrid').innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666;">Complete your profile to find matches!</p>';
                     return;
                 }
                 const res = await this.apiCall('getMatches', { userId: this.currentUser.id });
                 if (res.success) {
                     this.displayMatches(res.matches);
                 } else {
-                    this.showMessage('Tidak dapat memuat hasil pencocokan', 'error');
+                    this.showMessage('Could not load matches', 'error');
                 }
             }
 
             displayMatches(matches) {
                 const grid = document.getElementById('matchesGrid');
                 if (!matches.length) {
-                    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666;">Belum ada kecocokan. Lengkapi profil dan pasang lowongan/resume!</p>';
+                    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#666;">No matches yet. Complete your profile and post something!</p>';
                     return;
                 }
                 grid.innerHTML = '';
@@ -358,19 +359,19 @@
                     const skillsList = match.user.profile.skills ? match.user.profile.skills.split(',').slice(0, 5) : [];
                     card.innerHTML = `
                         <div class="match-header">
-                            <div class="match-title">${latestPost ? latestPost.title : 'Belum ada lowongan/resume'}</div>
-                            <div class="match-type match-${match.type}">${match.user.type === 'jobseeker' ? 'Kandidat' : 'Lowongan'}</div>
+                            <div class="match-title">${latestPost ? latestPost.title : 'No posts yet'}</div>
+                            <div class="match-type match-${match.type}">${match.user.type === 'jobseeker' ? 'Candidate' : 'Job'}</div>
                         </div>
                         <div class="skills">
                             ${skillsList.map(skill => `<span class="skill-tag">${skill.trim()}</span>`).join('')}
                         </div>
                         <div style="margin:15px 0;color:#666;font-size:0.95em;">
                             <strong>${match.user.name}</strong><br>
-                            ${match.user.profile.experience || 'Pengalaman tidak ditentukan'} · ${match.user.profile.location || 'Lokasi tidak ditentukan'}
+                            ${match.user.profile.experience || 'Experience not specified'} · ${match.user.profile.location || 'Location not specified'}
                         </div>
                         <div class="stats">
-                            <span>Skor Kecocokan: ${Math.round(match.score * 100)}%</span>
-                            <span>${match.user.posts?.length || 0} posting</span>
+                            <span>Match Score: ${Math.round(match.score * 100)}%</span>
+                            <span>${match.user.posts?.length || 0} posts</span>
                         </div>
                     `;
                     grid.appendChild(card);
@@ -389,26 +390,24 @@
                 document.getElementById('authContainer').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 const isJobseeker = this.currentUser.type === 'jobseeker';
-                document.getElementById('welcomeMsg').textContent = `Selamat datang, ${this.currentUser.name}!`;
+                document.getElementById('welcomeMsg').textContent = `Welcome back, ${this.currentUser.name}!`;
 
-                // Profile labels
-                document.getElementById('profileLabel').textContent = isJobseeker ? 'Keahlian Anda' : 'Keterampilan yang Dibutuhkan';
-                document.getElementById('experienceLabel').textContent = isJobseeker ? 'Pengalaman Anda' : 'Pengalaman yang Dibutuhkan';
-                document.getElementById('locationLabel').textContent = isJobseeker ? 'Lokasi yang Diinginkan' : 'Lokasi Kerja';
+                // Adjust labels according to role
+                document.getElementById('profileLabel').textContent = isJobseeker ? 'Your Skills' : 'Job Requirements';
+                document.getElementById('experienceLabel').textContent = isJobseeker ? 'Your Experience' : 'Required Experience';
+                document.getElementById('locationLabel').textContent = isJobseeker ? 'Preferred Location' : 'Job Location';
 
-                // Post tab labels
-                document.getElementById('postTitle').textContent = isJobseeker ? 'Pasang Resume' : 'Buat Lowongan Baru';
-                document.getElementById('postLabel').textContent = isJobseeker ? 'Posisi yang Dilamar' : 'Judul Lowongan';
+                document.getElementById('postTitle').textContent = isJobseeker ? 'Post Your Resume' : 'Post New Job';
+                document.getElementById('postLabel').textContent = isJobseeker ? 'Position You\'re Applying For' : 'Job Title';
 
-                // Show / hide extra skills field for UMKM
                 const postSkillsGroup = document.getElementById('postSkillsGroup');
                 if (!isJobseeker) {
-                    postSkillsGroup.classList.remove('hidden');
+                    postSkillsGroup.classList.remove('hidden'); // Show for UMKM
                 } else {
                     postSkillsGroup.classList.add('hidden');
                 }
 
-                // Fill profile if exists
+                // Pre-fill profile if exists
                 if (this.currentUser.profile) {
                     document.getElementById('skills').value = this.currentUser.profile.skills || '';
                     document.getElementById('experience').value = this.currentUser.profile.experience || 'mid';
@@ -455,9 +454,9 @@
                 document.getElementById('authForm').reset();
                 document.getElementById('name').parentElement.style.display = 'block';
                 this.isLoginMode = false;
-                document.getElementById('authButton').textContent = 'Daftar SkillMatch';
-                document.getElementById('switchText').textContent = 'Sudah punya akun?';
-                document.getElementById('switchMode').textContent = 'Masuk';
+                document.getElementById('authButton').textContent = 'Join SkillMatch';
+                document.getElementById('switchText').textContent = 'Already have an account?';
+                document.getElementById('switchMode').textContent = 'Login';
                 this.clearMessage();
             }
 
